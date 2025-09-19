@@ -93,10 +93,14 @@ export default function DashboardPage() {
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Globe className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-semibold">OrbitChain</span>
+            <Link href="/">
+              <div className="flex items-center gap-2 cursor-pointer">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Globe className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-xl font-semibold">OrbitChain</span>
+              </div>
+            </Link>
           </div>
           <div className="flex items-center gap-4">
             <Button variant="outline" size="sm">

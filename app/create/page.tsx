@@ -48,17 +48,22 @@ export default function CreateChainPage() {
                   Back
                 </Link>
               </Button>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Globe className="w-5 h-5 text-primary-foreground" />
+              <Link href="/">
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <Globe className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <Typography variant="h3" className="triggerx-logo">
+                    TRIGGER<span className="triggerx-gradient">X</span>
+                  </Typography>
                 </div>
-                <Typography variant="h3" className="triggerx-logo">
-                  TRIGGER<span className="triggerx-gradient">X</span>
-                </Typography>
-              </div>
+              </Link>
             </div>
             <div className="flex items-center gap-4">
               {!isConnected && <span className="text-sm text-muted-foreground">Connect wallet to deploy</span>}
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
               <ConnectWalletButton />
             </div>
           </div>

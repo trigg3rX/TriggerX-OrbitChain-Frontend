@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Zap, Shield, Globe } from "lucide-react"
+import { ConnectWalletButton } from "@/components/connect-wallet-button"
 
 export default function HomePage() {
   return (
@@ -15,10 +16,7 @@ export default function HomePage() {
             <span className="text-xl font-semibold">OrbitChain</span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">Already have an account?</span>
-            <Button variant="outline" size="sm">
-              Sign in
-            </Button>
+            <ConnectWalletButton />
           </div>
         </div>
       </header>
