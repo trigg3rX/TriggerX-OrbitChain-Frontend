@@ -12,8 +12,12 @@ import { Switch } from "@/components/ui/switch"
 import { Globe, ArrowLeft, Info, CheckCircle, HelpCircle, Zap } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Typography } from "@/components/ui/typography"
+import { ConnectWalletButton } from "@/components/connect-wallet-button"
+import { useWallet } from "@/contexts/wallet-context"
 
 export default function CreateChainPage() {
+  const { address, isConnected } = useWallet()
+
   const [formData, setFormData] = useState({
     organization: "",
     rollupName: "",
@@ -25,7 +29,7 @@ export default function CreateChainPage() {
     customGasToken: false,
     blockGasLimit: "60000000",
     withdrawPeriod: "600",
-    triggerxAutomation: false, // Added TriggerX automation toggle
+    triggerxAutomation: false,
   })
 
   const handleInputChange = (field: string, value: string | boolean) => {
@@ -54,10 +58,8 @@ export default function CreateChainPage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">Already have an account?</span>
-              <Button variant="outline" size="sm">
-                Sign in
-              </Button>
+              {!isConnected && <span className="text-sm text-muted-foreground">Connect wallet to deploy</span>}
+              <ConnectWalletButton />
             </div>
           </div>
         </header>
@@ -86,9 +88,10 @@ export default function CreateChainPage() {
                       <Select
                         value={formData.organization}
                         onValueChange={(value) => handleInputChange("organization", value)}
+                        disabled={!isConnected}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Sign in to select" />
+                          <SelectValue placeholder={isConnected ? "Select organization" : "Connect wallet first"} />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="personal">Personal Account</SelectItem>
@@ -113,6 +116,7 @@ export default function CreateChainPage() {
                         placeholder="e.g. Zora Network"
                         value={formData.rollupName}
                         onChange={(e) => handleInputChange("rollupName", e.target.value)}
+                        disabled={!isConnected}
                       />
                     </div>
                     <div className="space-y-2">
@@ -131,6 +135,7 @@ export default function CreateChainPage() {
                         id="chainId"
                         value={formData.chainId}
                         onChange={(e) => handleInputChange("chainId", e.target.value)}
+                        disabled={!isConnected}
                       />
                     </div>
                   </div>
@@ -252,6 +257,7 @@ export default function CreateChainPage() {
                       variant={formData.environment === "testnet" ? "default" : "outline"}
                       className="h-auto p-6 justify-start text-left"
                       onClick={() => handleInputChange("environment", "testnet")}
+                      disabled={!isConnected}
                     >
                       <div className="space-y-3 w-full">
                         <div className="flex items-center gap-2">
@@ -273,6 +279,7 @@ export default function CreateChainPage() {
                       variant={formData.environment === "mainnet" ? "default" : "outline"}
                       className="h-auto p-6 justify-start text-left"
                       onClick={() => handleInputChange("environment", "mainnet")}
+                      disabled={!isConnected}
                     >
                       <div className="space-y-3 w-full">
                         <div className="flex items-center gap-2">
@@ -383,8 +390,8 @@ export default function CreateChainPage() {
                     </Button>
                   </div>
 
-                  <Button className="w-full" size="lg">
-                    Sign in to deploy
+                  <Button className="w-full" size="lg" disabled={!isConnected}>
+                    {isConnected ? "Deploy Orbit Chain" : "Connect Wallet to Deploy"}
                   </Button>
                 </CardContent>
               </Card>
