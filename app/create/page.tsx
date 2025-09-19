@@ -15,6 +15,9 @@ import { Typography } from "@/components/ui/typography"
 import { ConnectWalletButton } from "@/components/connect-wallet-button"
 import { useWallet } from "@/contexts/wallet-context"
 
+const API_PORT = process.env.NEXT_PUBLIC_API_PORT || 9002;
+const API_BASE_URL = `http://192.168.0.223:${API_PORT}`;
+
 export default function CreateChainPage() {
   const { address, isConnected } = useWallet()
 
@@ -31,9 +34,41 @@ export default function CreateChainPage() {
     withdrawPeriod: "600",
     triggerxAutomation: false,
   })
+  const [loading, setLoading] = useState(false)
+  const [feedback, setFeedback] = useState<string | null>(null)
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleDeploy = async () => {
+    if (!isConnected || !address) return
+    setLoading(true)
+    setFeedback(null)
+    
+    const requestData = {
+      chain_id: Number(formData.chainId),
+      chain_name: formData.rollupName,
+      user_address: address,
+    }
+    
+    console.log("POST Request URL:", `${API_BASE_URL}/api/orbit-chain/deploy`)
+    console.log("POST Request Data:", requestData)
+    console.log("Full Request Body:", JSON.stringify(requestData, null, 2))
+    
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/orbit-chain/deploy`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      })
+      if (!res.ok) throw new Error(await res.text())
+      setFeedback("Chain deployment started successfully!")
+    } catch (err: any) {
+      setFeedback("Failed to deploy: " + (err?.message || "Unknown error"))
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -395,9 +430,14 @@ export default function CreateChainPage() {
                     </Button>
                   </div>
 
-                  <Button className="w-full" size="lg" disabled={!isConnected}>
-                    {isConnected ? "Deploy Orbit Chain" : "Connect Wallet to Deploy"}
+                  <Button className="w-full" size="lg" disabled={!isConnected || loading} onClick={handleDeploy}>
+                    {loading ? "Deploying..." : isConnected ? "Deploy Orbit Chain" : "Connect Wallet to Deploy"}
                   </Button>
+                  {feedback && (
+                    <div className={`mt-2 text-sm ${feedback.startsWith("Failed") ? "text-red-500" : "text-green-600"}`}>
+                      {feedback}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
