@@ -22,7 +22,6 @@ export default function CreateChainPage() {
   const { address, isConnected } = useWallet()
 
   const [formData, setFormData] = useState({
-    organization: "",
     rollupName: "",
     chainId: "39713",
     framework: "arbitrum-orbit",
@@ -77,12 +76,6 @@ export default function CreateChainPage() {
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back
-                </Link>
-              </Button>
               <Link href="/">
                 <div className="flex items-center gap-2 cursor-pointer">
                   <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -122,23 +115,7 @@ export default function CreateChainPage() {
                   <CardTitle className="text-lg">Basic Configuration</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="organization">Organization</Label>
-                      <Select
-                        value={formData.organization}
-                        onValueChange={(value) => handleInputChange("organization", value)}
-                        disabled={!isConnected}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder={isConnected ? "Select organization" : "Connect wallet first"} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="personal">Personal Account</SelectItem>
-                          <SelectItem value="company">Company Account</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="rollupName">
                         Rollup name
@@ -157,6 +134,7 @@ export default function CreateChainPage() {
                         value={formData.rollupName}
                         onChange={(e) => handleInputChange("rollupName", e.target.value)}
                         disabled={!isConnected}
+                        className="border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md px-3 py-2"
                       />
                     </div>
                     <div className="space-y-2">
@@ -176,6 +154,7 @@ export default function CreateChainPage() {
                         value={formData.chainId}
                         onChange={(e) => handleInputChange("chainId", e.target.value)}
                         disabled={!isConnected}
+                        className="border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md px-3 py-2"
                       />
                     </div>
                   </div>
@@ -256,10 +235,16 @@ export default function CreateChainPage() {
                             </p>
                           </div>
                         </div>
-                        <Switch
-                          checked={formData.triggerxAutomation}
-                          onCheckedChange={(checked) => handleInputChange("triggerxAutomation", checked)}
-                        />
+                        <div className="relative">
+                          <Switch
+                            checked={formData.triggerxAutomation}
+                            onCheckedChange={(checked) => handleInputChange("triggerxAutomation", checked)}
+                            className="data-[state=unchecked]:bg-gray-300 data-[state=unchecked]:border-gray-400"
+                          />
+                          {!formData.triggerxAutomation && (
+                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+                          )}
+                        </div>
                       </div>
                       {formData.triggerxAutomation && (
                         <div className="mt-3 p-3 bg-accent/10 rounded-lg">
@@ -278,9 +263,9 @@ export default function CreateChainPage() {
                         <span className="text-xs font-medium text-blue-600">i</span>
                       </div>
                       <span className="text-sm font-medium">Customers deployed with this stack</span>
-                      <Button variant="ghost" size="sm" className="ml-auto text-xs">
+                      {/* <Button variant="ghost" size="sm" className="ml-auto text-xs">
                         See more →
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </CardContent>
@@ -312,26 +297,6 @@ export default function CreateChainPage() {
                             Best used as a persistent testnet and staging environment.
                           </p>
                           <div className="text-sm font-medium text-primary">Three months free then $250 / month</div>
-                        </div>
-                      </div>
-                    </Button>
-                    <Button
-                      variant={formData.environment === "mainnet" ? "default" : "outline"}
-                      className="h-auto p-6 justify-start text-left"
-                      onClick={() => handleInputChange("environment", "mainnet")}
-                      disabled={!isConnected}
-                    >
-                      <div className="space-y-3 w-full">
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full" />
-                          <span className="font-medium">Mainnet</span>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            Deploy a live network with genuine transactions
-                          </p>
-                          <p className="text-sm text-muted-foreground leading-relaxed">and real economic value.</p>
-                          <div className="text-sm font-medium text-primary">Plans starting at $5,000 / month</div>
                         </div>
                       </div>
                     </Button>
