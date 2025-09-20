@@ -1,140 +1,110 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@font-face {
+  font-family: "Sharp Grotesk";
+  src: url("/fonts/sharp-grotesk-300.otf") format("opentype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Actay";
+  src: url("/fonts/Actay-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Actay Wide";
+  src: url("/fonts/ActayWide-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@theme {
+  --font-family-actay-regular: "Actay", system-ui, sans-serif;
+  --font-family-actay-wide-bold: "Actay Wide", system-ui, sans-serif;
+  --font-family-sharp-grotesk: "Sharp Grotesk", system-ui, sans-serif;
+}
 
 :root {
-  /* Updated to TriggerX dark theme with green accents */
-  --background: oklch(0.08 0 0); /* Dark background like TriggerX */
-  --foreground: oklch(0.95 0 0); /* White text */
-  --card: oklch(0.12 0 0); /* Dark card background */
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.75 0.15 140); /* TriggerX green accent */
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.2 0 0); /* Dark gray */
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.85 0.2 85); /* Yellow accent like TriggerX */
-  --accent-foreground: oklch(0.08 0 0);
-  --destructive: oklch(0.65 0.2 25);
-  --destructive-foreground: oklch(0.95 0 0);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.15 0 0);
-  --ring: oklch(0.75 0.15 140 / 0.5);
-  --chart-1: oklch(0.75 0.15 140);
-  --chart-2: oklch(0.85 0.2 85);
-  --chart-3: oklch(0.65 0.15 200);
-  --chart-4: oklch(0.6 0.15 45);
-  --chart-5: oklch(0.55 0.2 270);
-  --radius: 0.5rem;
-  --sidebar: oklch(0.12 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.75 0.15 140);
-  --sidebar-primary-foreground: oklch(0.08 0 0);
-  --sidebar-accent: oklch(0.2 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.75 0.15 140 / 0.5);
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --cursor-x: 50%;
+  --cursor-y: 50%;
+  /* Brand accents */
+  --brand-a: #fff282;
+  --brand-b: #82fbd0;
+  --brand-c: #ffffff;
+  --brand-d: #c07af6;
 }
 
-.dark {
-  /* Dark mode uses same values as root for consistent TriggerX theme */
-  --background: oklch(0.08 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.12 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.08 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.75 0.15 140);
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.2 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.85 0.2 85);
-  --accent-foreground: oklch(0.08 0 0);
-  --destructive: oklch(0.65 0.2 25);
-  --destructive-foreground: oklch(0.95 0 0);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.15 0 0);
-  --ring: oklch(0.75 0.15 140 / 0.5);
-  --chart-1: oklch(0.75 0.15 140);
-  --chart-2: oklch(0.85 0.2 85);
-  --chart-3: oklch(0.65 0.15 200);
-  --chart-4: oklch(0.6 0.15 45);
-  --chart-5: oklch(0.55 0.2 270);
-  --sidebar: oklch(0.12 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.75 0.15 140);
-  --sidebar-primary-foreground: oklch(0.08 0 0);
-  --sidebar-accent: oklch(0.2 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.75 0.15 140 / 0.5);
-}
-
-@theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
 
-/* Added TriggerX specific styles */
-.triggerx-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #a3f3a3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+body {
+  background: #0a0a0a;
+  color: var(--foreground);
+  font-family: "Actay", system-ui, sans-serif;
+  position: relative;
+  isolation: isolate;
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
-.triggerx-logo {
-  font-weight: 900;
-  letter-spacing: -0.02em;
+/* Animated black textured background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10vh;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    /* Cursor spotlight (wider) */ radial-gradient(
+      60% 55% at var(--cursor-x) var(--cursor-y),
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0) 70%
+    ),
+    /* Ambient corner glows */
+      radial-gradient(
+        75% 65% at 18% 18%,
+        rgba(255, 255, 255, 0.035),
+        rgba(255, 255, 255, 0) 62%
+      ),
+    radial-gradient(
+      75% 65% at 82% 82%,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0) 62%
+    ),
+    /* Coarse grid */
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.045) 0 2px,
+        transparent 2px 42px
+      ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.045) 0 2px,
+      transparent 2px 42px
+    ),
+    /* Fine grid */
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.02) 0 1px,
+        transparent 1px 14px
+      ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0 1px,
+      transparent 1px 14px
+    );
+  background-blend-mode: screen, screen, screen, normal, normal, normal, normal;
+  opacity: 0.6;
 }
